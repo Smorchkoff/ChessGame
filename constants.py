@@ -1,0 +1,9 @@
+import pygame
+
+WIDTH, HEIGHT = 800, 600
+ROWS, COLS = 8, 8
+SQUARE_WIDTH = WIDTH // ROWS
+SQUARE_HEIGHT = HEIGHT // COLS
+
+BLACK = 'black'
+WHITE = 'lightgray'

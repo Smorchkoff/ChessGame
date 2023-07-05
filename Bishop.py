@@ -4,9 +4,9 @@ from constants import black_locations, white_locations, WHITE
 
 
 class Bishop(Piece):
-    def draw(self, win):
-        chess_icon = pygame.image.load(f'images/Chess/{self.color}_bishop.png').convert_alpha()
-        win.blit(chess_icon, (self.x - 14, self.y - 20), )
+    def draw(self, win, col):
+        chess_icon = pygame.image.load(f'images/Chess/{col}_bishop.png').convert_alpha()
+        win.blit(chess_icon, (self.x, self.y), )
 
     def move(self, pos):
         moves_list = []

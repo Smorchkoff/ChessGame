@@ -7,7 +7,7 @@ class Piece:
     PADDING = 10
     BORDER = 2
 
-    def __init__(self, row, col, color):
+    def __init__(self, col, row, color):
         self.row = row
         self.col = col
         self.color = color
@@ -17,11 +17,11 @@ class Piece:
         self.calc_pos()
 
     def calc_pos(self):
-        self.x = SQUARE_WIDTH * self.col + SQUARE_WIDTH // 2
-        self.y = SQUARE_HEIGHT * self.row + SQUARE_HEIGHT // 2
+        self.x = (self.col * SQUARE_WIDTH + SQUARE_WIDTH // 2) - 15
+        self.y = (self.row * SQUARE_HEIGHT + SQUARE_HEIGHT // 2) - 15
 
-    def draw(self, win):
-        chess_icon = pygame.image.load(f'images/Chess/{self.color}_king.png').convert_alpha()
+    def draw(self, win, col):
+        chess_icon = pygame.image.load(f'images/Chess/{col}_king.png').convert_alpha()
         win.blit(chess_icon, (self.x - 14, self.y - 20), )
 
     def __repr__(self):

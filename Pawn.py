@@ -4,9 +4,9 @@ from constants import white_locations, black_locations, BLACK, WHITE
 
 
 class Pawn(Piece):
-    def draw(self, win):
-        chess_icon = pygame.image.load(f'images/Chess/{self.color}_pawn.png').convert_alpha()
-        win.blit(chess_icon, (self.x - 14, self.y - 20), )
+    def draw(self, win, col):
+        chess_icon = pygame.image.load(f'images/Chess/{col}_pawn.png').convert_alpha()
+        win.blit(chess_icon, (self.x, self.y))
 
     def move(self, pos):
         moves_list = []

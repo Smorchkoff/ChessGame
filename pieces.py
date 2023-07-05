@@ -1,5 +1,6 @@
 import pygame
-from constants import SQUARE_WIDTH, SQUARE_HEIGHT, BLACK, WHITE
+
+from constants import SQUARE_WIDTH, SQUARE_HEIGHT
 
 
 class Piece:
@@ -24,4 +25,4 @@ class Piece:
         win.blit(chess_icon, (self.x - 14, self.y - 20), )
 
     def __repr__(self):
-        return str(self.color, )
+        return str(self.color, self.col, self.row)

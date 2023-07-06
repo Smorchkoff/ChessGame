@@ -6,7 +6,7 @@ from Pawn import Pawn
 from Rook import Rook
 from Queen import Queen
 from constants import BLACK, WHITE, ROWS, COLS, SQUARE_WIDTH, SQUARE_HEIGHT, BLACK_SQUARE, white_locations, \
-    black_locations, WIN
+    black_locations, WIN, WIDTH, HEIGHT, info_rect_height, info_rect_width
 
 piece_list = [Pawn, Rook, Knight, Bishop, Queen, King]
 
@@ -25,11 +25,15 @@ class Board:
             for col in range(row % 2, COLS, 2):
                 pygame.draw.rect(win, WHITE, (row * SQUARE_WIDTH, col * SQUARE_HEIGHT, SQUARE_WIDTH, SQUARE_HEIGHT))
         for i in range(9):
-            pygame.draw.line(win, 'black', (0, SQUARE_HEIGHT * i), (800, SQUARE_HEIGHT * i), 2)
-            pygame.draw.line(win, 'black', (SQUARE_WIDTH * i, 0), (SQUARE_WIDTH * i, 600), 2)
+            pygame.draw.line(win, 'black', (0, SQUARE_HEIGHT * i), (880, SQUARE_HEIGHT * i), 2)
+            pygame.draw.line(win, 'black', (SQUARE_WIDTH * i, 0), (SQUARE_WIDTH * i, 650), 2)
 
     def create_board(self, win, white_pieces, black_pieces):
         self.draw_cubes(win)
+
+        pygame.draw.rect(WIN, (89, 52, 148), [0, 650, WIDTH + info_rect_width, 50], 5)
+        pygame.draw.rect(WIN, (89, 52, 148), [777 + 100, 0, 200, HEIGHT + info_rect_height], 3)
+
         for i, piece in enumerate(white_pieces):
             self.board.append([])
 
@@ -44,6 +48,8 @@ class Board:
                 for loc in black_locations:
                     print(f'len blackpieces = {len(black_pieces)}')
                     print(f'loc[{black_locations.index(loc)}]: {loc}')
+
+
 
         # global color, piece
         # for row in range(ROWS):

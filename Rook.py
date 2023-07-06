@@ -1,11 +1,12 @@
 import pygame
 from pieces import Piece
-from constants import black_locations, white_locations, BLACK, WHITE
+from constants import black_locations, white_locations, BLACK, WHITE, piece_size
 
 
 class Rook(Piece):
     def draw(self, win, col):
-        chess_icon = pygame.image.load(f'images/Chess/{col}_rook.png').convert_alpha()
+        chess_icon = pygame.image.load(f'images/Chess2/{col}_rook.png').convert_alpha()
+        chess_icon = pygame.transform.smoothscale(chess_icon, piece_size)
         win.blit(chess_icon, (self.x, self.y))
 
     def move(self, pos):

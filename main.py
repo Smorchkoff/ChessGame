@@ -1,6 +1,6 @@
 import pygame
 
-from constants import WIDTH, HEIGHT, black_locations, white_locations, BLACK, WHITE, WIN
+from constants import WIDTH, HEIGHT, black_locations, white_locations, BLACK, WHITE, WIN, SQUARE_HEIGHT, SQUARE_WIDTH
 from Board import Board
 from King import King
 from Knight import Knight
@@ -40,13 +40,13 @@ def draw_move():
     for i in range(len(white_pieces)):
         if turn_step < 2:
             if selection == i:
-                pygame.draw.rect(WIN, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 75 + 1,
-                                              100, 75], 2)
+                pygame.draw.rect(WIN, 'red', [white_locations[i][0] * SQUARE_WIDTH + 1, white_locations[i][1] * SQUARE_HEIGHT + 1,
+                                              SQUARE_WIDTH, SQUARE_HEIGHT], 2)
     for i in range(len(black_pieces)):
         if turn_step >= 2:
             if selection == i:
-                pygame.draw.rect(WIN, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 75 + 1,
-                                               100, 75], 2)
+                pygame.draw.rect(WIN, 'blue', [black_locations[i][0] * SQUARE_WIDTH + 1, black_locations[i][1] * SQUARE_HEIGHT + 1,
+                                               SQUARE_WIDTH, SQUARE_HEIGHT], 2)
 
 
 def check_moves(pieces, locations, turn):
@@ -78,7 +78,7 @@ def draw_valid_moves(moves):
         color = 'blue'
 
     for i in range(len(moves)):
-        pygame.draw.circle(WIN, color, (moves[i][0] * 100 + 50, moves[i][1] * 70 + 50), 5)
+        pygame.draw.circle(WIN, color, (moves[i][0] * SQUARE_WIDTH + 55 , moves[i][1] * SQUARE_HEIGHT + 40), 5)
 
 
 captured_pieces_white = []
@@ -99,11 +99,9 @@ def main():
 
         board.create_board(WIN, white_pieces, black_pieces)
         draw_move()
-        pygame.draw.rect(WIN, 'gold', [0, 600, WIDTH + 200, 100], 5)
-        pygame.draw.rect(WIN, 'gold', [600 + 200, 0, 200, HEIGHT + 100], 5)
-        status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
-                       'Black: Select a Piece to Move!', 'Black: Select a Destination!']
-        WIN.blit(big_font.render(status_text[turn_step], True, 'black'), (100, 625))
+        status_text = ['Белые: Выберите фигуру для хода!', 'Белые: Выберите ход!',
+                       'Черные: Выберите фигуру для хода!', 'Чёрные: Выберите ход!']
+        WIN.blit(big_font.render(status_text[turn_step], True, 'black'), (200, 650))
         # print(f'selection: {selection}')
         # print(f'turn move: {turn_step}')
         # print(f'valid_moves: {valid_moves}')
@@ -115,9 +113,11 @@ def main():
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                x_coord = event.pos[0] // 100
-                y_coord = event.pos[1] // 75
+                x_coord = event.pos[0] // SQUARE_WIDTH
+                y_coord = event.pos[1] // SQUARE_HEIGHT
+                mouse_coords = (event.pos[0], event.pos[1])
                 click_coords = (x_coord, y_coord)
+                print(f'mouse_coords: {mouse_coords}')
                 print(f'click_coords: {click_coords}')
                 if turn_step <= 1:
                     if click_coords == (8, 8) or click_coords == (9, 8):

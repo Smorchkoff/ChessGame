@@ -1,11 +1,12 @@
 import pygame
 from pieces import Piece
-from constants import WHITE, black_locations, white_locations
+from constants import WHITE, black_locations, white_locations, piece_size
 
 
 class King(Piece):
     def draw(self, win, col):
-        chess_icon = pygame.image.load(f'images/Chess/{col}_king.png').convert_alpha()
+        chess_icon = pygame.image.load(f'images/Chess2/{col}_king.png').convert_alpha()
+        chess_icon = pygame.transform.smoothscale(chess_icon, piece_size)
         win.blit(chess_icon, (self.x, self.y ), )
 
     def move(self, pos):

@@ -40,13 +40,13 @@ def draw_move():
     for i in range(len(white_pieces)):
         if turn_step < 2:
             if selection == i:
-                pygame.draw.rect(WIN, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1,
-                                              100, 100], 2)
+                pygame.draw.rect(WIN, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 75 + 1,
+                                              100, 75], 2)
     for i in range(len(black_pieces)):
         if turn_step >= 2:
             if selection == i:
-                pygame.draw.rect(WIN, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
-                                               100, 100], 2)
+                pygame.draw.rect(WIN, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 75 + 1,
+                                               100, 75], 2)
 
 
 def check_moves(pieces, locations, turn):
@@ -78,18 +78,18 @@ def draw_valid_moves(moves):
         color = 'blue'
 
     for i in range(len(moves)):
-        pygame.draw.circle(WIN, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50), 5)
+        pygame.draw.circle(WIN, color, (moves[i][0] * 100 + 50, moves[i][1] * 70 + 50), 5)
 
-
-white_moves = check_moves(white_pieces, white_locations, WHITE)
-black_moves = check_moves(black_pieces, black_locations, BLACK)
 
 captured_pieces_white = []
 captured_pieces_black = []
 
+white_moves = check_moves(white_pieces, white_locations, WHITE)
+black_moves = check_moves(black_pieces, black_locations, BLACK)
+
 
 def main():
-    global turn_step, selection, valid_moves, winner
+    global turn_step, selection, valid_moves, winner, black_moves, white_moves
     running = True
     clock = pygame.time.Clock()
     board = Board()
@@ -97,28 +97,28 @@ def main():
     while running:
         clock.tick(FPS)
 
-        board.create_board(WIN)
-        pygame.draw.circle(WIN, 'blue', (45, 40), 10)
+        board.create_board(WIN, white_pieces, black_pieces)
+        draw_move()
         pygame.draw.rect(WIN, 'gold', [0, 600, WIDTH + 200, 100], 5)
         pygame.draw.rect(WIN, 'gold', [600 + 200, 0, 200, HEIGHT + 100], 5)
         status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
                        'Black: Select a Piece to Move!', 'Black: Select a Destination!']
         WIN.blit(big_font.render(status_text[turn_step], True, 'black'), (100, 625))
-        pygame.display.update()
-        draw_move()
-
+        # print(f'selection: {selection}')
+        # print(f'turn move: {turn_step}')
+        # print(f'valid_moves: {valid_moves}')
         if selection != 100:
             valid_moves = check_valid_moves()
             draw_valid_moves(valid_moves)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x_coord = event.pos[0] // 100
-                y_coord = event.pos[1] // 100
+                y_coord = event.pos[1] // 75
                 click_coords = (x_coord, y_coord)
+                print(f'click_coords: {click_coords}')
                 if turn_step <= 1:
                     if click_coords == (8, 8) or click_coords == (9, 8):
                         winner = 'black'
@@ -130,7 +130,7 @@ def main():
                         white_locations[selection] = click_coords
                         if click_coords in black_locations:
                             black_piece = black_locations.index(click_coords)
-                            captured_pieces_white.append(black_piece[black_piece])
+                            captured_pieces_white.append(black_pieces[black_piece])
                             if black_pieces[black_piece] == King:
                                 winner == 'white'
                             black_pieces.pop(black_piece)
@@ -161,6 +161,7 @@ def main():
                         turn_step = 0
                         selection = 100
                         valid_moves = []
+        pygame.display.flip()
 
     pygame.quit()
 

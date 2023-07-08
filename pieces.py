@@ -14,11 +14,13 @@ class Piece:
 
         self.x = 0
         self.y = 0
-        self.calc_pos()
+        self.old_pos = self.calc_pos()
 
     def calc_pos(self):
-        self.x = (self.col * SQUARE_WIDTH + SQUARE_WIDTH // 2) -  37
+        self.x = (self.col * SQUARE_WIDTH + SQUARE_WIDTH // 2) - 37
         self.y = (self.row * SQUARE_HEIGHT + SQUARE_HEIGHT // 2) - 40
+        old_pos = (self.x, self.y)
+        return old_pos
 
     def draw(self, win, col):
         chess_icon = pygame.image.load(f'images/Chess/{col}_king.png').convert_alpha()

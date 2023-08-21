@@ -7,11 +7,12 @@ class Piece:
     PADDING = 10
     BORDER = 2
 
-    def __init__(self, col, row, color):
+    def __init__(self, row, col, color):
         self.row = row
         self.col = col
         self.color = color
 
+        self.moves_list = []
         self.x = 0
         self.y = 0
         self.old_pos = self.calc_pos()
@@ -23,8 +24,14 @@ class Piece:
         return old_pos
 
     def draw(self, win, col):
-        chess_icon = pygame.image.load(f'images/Chess/{col}_king.png').convert_alpha()
+        chess_icon = pygame.image.load(f'./assets/Chess2/{col}_king.png').convert_alpha()
         win.blit(chess_icon, (self.x - 14, self.y - 20), )
 
+    def get_loc(self):
+        return self.row, self.col
+
+    def get_moves(self):
+        return self.moves_list
+
     def __repr__(self):
-        return str(self.color, self.col, self.row)
+        return str(f'{self.__class__},{self.color},{self.row}, {self.col} ')

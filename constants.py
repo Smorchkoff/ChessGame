@@ -164,9 +164,22 @@ def set_button(surface, txt, x, y, width, func):
         onClick=lambda: func()
     )
 
-text_colour = 'White'
-main_colour = (135,132,132)
-border_colour = 'Yellow'
-shadow_colour = 'lightgray'
 
 
+main_colour = (135, 132, 132, 125)
+#NOTE ###############################_ДЛЯ АНЮТЫ_###########################################
+#NOTE ################_Цвет задается в rgb - (0-255, 0-255, 0-255, 0-255), последний параметр - прозрачность
+text_colour = 'White'                               #NOTE Цвет текста
+border_colour = 'Yellow'                            #NOTE Цвет рамки
+radius = 10                                         #NOTE Округление рамки
+inactive_Colour = (135, 132, 132, 125)              #NOTE Цвет кнопки, когда на ней не находится курсор
+hover_Colour = (135, 132, 132, 125)                 #NOTE Цвет кнопки, когда на ней находится курсор
+pressed_Colour = (135, 132, 132, 125)               #NOTE Цвет кнопки, когда кнопка была нажата
+hoverBorder_Colour = 'Yellow'                       #NOTE Цвет рамки, когда на кнопке находится курсор
+inactiveBorder_Colour = (135, 132, 132, 125)        #NOTE Цвет рамки, когда на ней не находится курсор
+border_Thickness = 3                                #NOTE Толщина рамки
+shadow_Colour = 'lightgray'                         #NOTE Цвет тени от кнопки
+shadow_Distance = 5                                 #NOTE Расстояние(Толщина) Тени
+
+alpha_surf = pygame.Surface((1000, 700), pygame.SRCALPHA)
+empty = (0, 0, 0, 0)

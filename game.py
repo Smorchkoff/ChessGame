@@ -2,12 +2,13 @@ import pygame
 from pygame_widgets.button import Button
 import pygame_widgets
 from constants import WIN, wood_bg, big_menu_font, medium_menu_font, menu_font, text_colour, main_colour, \
-    border_colour, shadow_colour, WHITE, BLACK, SQUARE_WIDTH, SQUARE_HEIGHT, print_board
+    border_colour, WHITE, BLACK, SQUARE_WIDTH, SQUARE_HEIGHT, print_board, alpha_surf, empty, radius, \
+    inactive_Colour, inactiveBorder_Colour, border_Thickness, hoverBorder_Colour, hover_Colour, pressed_Colour, shadow_Colour, \
+    shadow_Distance
 from colorama import Fore, Style
 from AI import alpha_beta_minimax
 from Board import Board, piece_dict
 from King import King
-
 
 # TODO Создайте игровую доску с помощью модуля Pygame. ##DONE##
 #
@@ -76,7 +77,7 @@ def check_moves(pieces, loc, color):
 
 pygame.init()
 play_btn = Button(
-    WIN,
+    alpha_surf,
     400,
     200,
     300,
@@ -84,19 +85,19 @@ play_btn = Button(
     text='Выбрать режим',
     font=menu_font,
     textColour=text_colour,
-    radius=10,
-    inactiveColour=main_colour,
-    hoverColour=main_colour,
-    pressedColour=main_colour,
-    hoverBorderColour=border_colour,
-    inactiveBorderColour=main_colour,
-    borderThickness=3,
-    shadowColour=shadow_colour,
-    shadowDistance=5,
+    radius=radius,
+    inactiveColour=inactive_Colour,
+    hoverColour=hover_Colour,
+    pressedColour=pressed_Colour,
+    hoverBorderColour=hoverBorder_Colour,
+    inactiveBorderColour=inactiveBorder_Colour,
+    borderThickness=border_Thickness,
+    shadowColour=shadow_Colour,
+    shadowDistance=shadow_Distance,
     onClick=lambda: choose_menu()
 )
 quit_btn = Button(
-    WIN,
+    alpha_surf,
     400,
     300,
     200,
@@ -104,19 +105,19 @@ quit_btn = Button(
     text='Выйти',
     font=menu_font,
     textColour=text_colour,
-    radius=10,
-    inactiveColour=main_colour,
-    hoverColour=main_colour,
-    pressedColour=main_colour,
-    hoverBorderColour=border_colour,
-    inactiveBorderColour=main_colour,
-    borderThickness=3,
-    shadowColour=shadow_colour,
-    shadowDistance=5,
+    radius=radius,
+    inactiveColour=inactive_Colour,
+    hoverColour=hover_Colour,
+    pressedColour=pressed_Colour,
+    hoverBorderColour=hoverBorder_Colour,
+    inactiveBorderColour=inactiveBorder_Colour,
+    borderThickness=border_Thickness,
+    shadowColour=shadow_Colour,
+    shadowDistance=shadow_Distance,
     onClick=lambda: pygame.quit()
 )
 back_btn = Button(
-    WIN,
+    alpha_surf,
     400,
     600,
     200,
@@ -124,19 +125,19 @@ back_btn = Button(
     text='Назад',
     font=menu_font,
     textColour=text_colour,
-    radius=10,
-    inactiveColour=main_colour,
-    hoverColour=main_colour,
-    pressedColour=main_colour,
-    hoverBorderColour=border_colour,
-    inactiveBorderColour=main_colour,
-    borderThickness=3,
-    shadowColour=shadow_colour,
-    shadowDistance=5,
+    radius=radius,
+    inactiveColour=inactive_Colour,
+    hoverColour=hover_Colour,
+    pressedColour=pressed_Colour,
+    hoverBorderColour=hoverBorder_Colour,
+    inactiveBorderColour=inactiveBorder_Colour,
+    borderThickness=border_Thickness,
+    shadowColour=shadow_Colour,
+    shadowDistance=shadow_Distance,
     onClick=lambda: main_menu()
 )
 USERvsAI_btn = Button(
-    WIN,
+    alpha_surf,
     200,
     400,
     200,
@@ -144,19 +145,19 @@ USERvsAI_btn = Button(
     text='USERvsAI',
     font=menu_font,
     textColour=text_colour,
-    radius=10,
-    inactiveColour=main_colour,
-    hoverColour=main_colour,
-    pressedColour=main_colour,
-    hoverBorderColour=border_colour,
-    inactiveBorderColour=main_colour,
-    borderThickness=3,
-    shadowColour=shadow_colour,
-    shadowDistance=5,
+    radius=radius,
+    inactiveColour=inactive_Colour,
+    hoverColour=hover_Colour,
+    pressedColour=pressed_Colour,
+    hoverBorderColour=hoverBorder_Colour,
+    inactiveBorderColour=inactiveBorder_Colour,
+    borderThickness=border_Thickness,
+    shadowColour=shadow_Colour,
+    shadowDistance=shadow_Distance,
     onClick=lambda: set_userVSai_mode(brd)
 )
 USERvsUSER_btn = Button(
-    WIN,
+    alpha_surf,
     600,
     400,
     200,
@@ -164,19 +165,19 @@ USERvsUSER_btn = Button(
     text='USERvsUSER',
     font=menu_font,
     textColour=text_colour,
-    radius=10,
-    inactiveColour=main_colour,
-    hoverColour=main_colour,
-    pressedColour=main_colour,
-    hoverBorderColour=border_colour,
-    inactiveBorderColour=main_colour,
-    borderThickness=3,
-    shadowColour=shadow_colour,
-    shadowDistance=5,
+    radius=radius,
+    inactiveColour=inactive_Colour,
+    hoverColour=hover_Colour,
+    pressedColour=pressed_Colour,
+    hoverBorderColour=hoverBorder_Colour,
+    inactiveBorderColour=inactiveBorder_Colour,
+    borderThickness=border_Thickness,
+    shadowColour=shadow_Colour,
+    shadowDistance=shadow_Distance,
     onClick=lambda: set_userVSuser_mode(brd)
 )
 forfeit_btn = Button(
-    WIN,
+    alpha_surf,
     876,
     650,
     125,
@@ -217,13 +218,15 @@ def main_menu():
         back_btn.hide()
         play_btn.show()
         quit_btn.show()
+        USERvsUSER_btn.hide()
+        USERvsAI_btn.hide()
         # WIN.fill((0,50,100))
+
         WIN.blit(wood_bg, (0, 0))
-
-        # alpha_surf = pygame.Surface((200, 200), pygame.SRCALPHA)
-        # alpha_surf.fill((255, 255, 100, 128))
-
+        WIN.blit(alpha_surf, (0, 0))
+        alpha_surf.fill(empty)
         WIN.blit(big_menu_font.render('CHESS GAME', True, 'White'), (300, 30))
+
         pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
 
@@ -239,7 +242,10 @@ def choose_menu():
         back_btn.show()
         USERvsAI_btn.show()
         USERvsUSER_btn.show()
+
         WIN.blit(wood_bg, (0, 0))
+        WIN.blit(alpha_surf, (0, 0))
+        alpha_surf.fill(empty)
         WIN.blit(medium_menu_font.render('Выбери режим!', True, 'White'), (300, 30))
         pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
@@ -257,6 +263,9 @@ def set_userVSuser_mode(board):
     running = True
     back_btn.hide()
     forfeit_btn.show()
+    USERvsUSER_btn.hide()
+    USERvsAI_btn.hide()
+    alpha_surf.fill(empty)
     selection = 100
     board.set_default_values()
     black_locations = board.get_black_locations()
@@ -268,8 +277,7 @@ def set_userVSuser_mode(board):
     locations = board.get_board()
     valid_moves = []
     while running:
-        USERvsUSER_btn.hide()
-        USERvsAI_btn.hide()
+
         clock.tick(30)
 
         if counter < 30:
@@ -284,7 +292,7 @@ def set_userVSuser_mode(board):
         if selection != 100:
             valid_moves = check_valid_moves(selection, white_moves, black_moves)
             board.draw_valid_moves(valid_moves)
-
+        WIN.blit(alpha_surf, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -352,7 +360,6 @@ def set_userVSuser_mode(board):
 
         if board.winner != '':
             draw_game_over(brd)
-        forfeit_btn.show()
         pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
     pygame.quit()
@@ -371,6 +378,7 @@ def set_userVSai_mode(board):
     running = True
     back_btn.hide()
     forfeit_btn.show()
+    alpha_surf.fill(empty)
     selection = 100
     board.set_default_values()
     black_locations = board.get_black_locations()
@@ -393,11 +401,10 @@ def set_userVSai_mode(board):
         board.draw_selected_piece()
         board.draw_check(black_moves, white_moves, counter)
         board.draw_captured_pieces(captured_pieces_white, captured_pieces_black)
-
         if selection != 100:
             valid_moves = check_valid_moves(selection, white_moves, black_moves)
             board.draw_valid_moves(valid_moves)
-
+        WIN.blit(alpha_surf, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -461,8 +468,12 @@ def draw_game_over(board):
     while running:
         forfeit_btn.hide()
         back_btn.show()
+        # alpha_surf.fill(empty)
         WIN.fill((50, 0, 100))
+
+        WIN.blit(alpha_surf, (0, 0))
         WIN.blit(menu_font.render(f'Победитель {board.winner}!', True, 'White'), (300, 200))
         WIN.blit(menu_font.render(f'Для перезапуста нажмите на кнопку.', True, 'White'), (300, 250))
+        alpha_surf.fill(empty)
         pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
